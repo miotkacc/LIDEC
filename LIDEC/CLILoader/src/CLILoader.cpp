@@ -10,6 +10,12 @@ void CLILoader::showExampleInput(){
     std::cout<<"MakeSoup water potato onion 3"<<std::endl;
 }
 
+std::string CLILoader::capture(){
+    std::string userProvidedStr{};
+    std::cin>>userProvidedStr;
+    return userProvidedStr;
+}
+
 ActionParams CLILoader::parse(std::string someInput){
     auto regExp = std::regex("([a-zA-Z0-9]+)");
     const std::sregex_iterator end{};
