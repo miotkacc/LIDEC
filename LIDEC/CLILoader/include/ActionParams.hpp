@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string>
 #include <vector>
 #include <iostream>
@@ -10,3 +12,5 @@ struct ActionParams{
         return action == actionParams.action and params == actionParams.params; 
     }
 };
+
+std::ostream& operator<<(std::ostream& o, const ActionParams& actionParams);

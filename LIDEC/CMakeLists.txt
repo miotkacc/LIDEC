@@ -8,7 +8,7 @@ add_subdirectory(XMLLoader)
 
 add_executable(main main.cpp)
 
-target_link_libraries(main CLILoader)
+target_link_libraries(main CLILoader XMLLoader ActionParams)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -21,7 +21,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 add_executable(testCLILoader testCLILoader.cpp)
-target_link_libraries(testCLILoader CLILoader GTest::gtest_main GTest::gmock_main)
+target_link_libraries(testCLILoader CLILoader GTest::gtest_main GTest::gmock_main ActionParams)
 
 add_executable(testXMLLoader testXMLLoader.cpp)
 target_link_libraries(testXMLLoader XMLLoader CLILoader GTest::gtest_main GTest::gmock_main)

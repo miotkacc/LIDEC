@@ -5,6 +5,5 @@
 class XMLLoader{
 public:
     std::string getFileContent(std::filesystem::path);
-    //std::string getXMLTree(std::string)
-    //ActionParams ParseXML();
+    ActionParams parseXMLString(std::string in_str);
 };

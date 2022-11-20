@@ -4,7 +4,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-
+#include "ActionParams.hpp"
 #include "CLILoader.hpp"
 
 using namespace std::string_literals;
