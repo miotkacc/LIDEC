@@ -24,4 +24,4 @@ add_executable(testCLILoader testCLILoader.cpp)
 target_link_libraries(testCLILoader CLILoader GTest::gtest_main GTest::gmock_main ActionParams)
 
 add_executable(testXMLLoader testXMLLoader.cpp)
-target_link_libraries(testXMLLoader XMLLoader CLILoader GTest::gtest_main GTest::gmock_main)
+target_link_libraries(testXMLLoader XMLLoader CLILoader ActionParams GTest::gtest_main GTest::gmock_main)
