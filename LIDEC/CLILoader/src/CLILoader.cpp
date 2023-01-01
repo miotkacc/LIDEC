@@ -27,8 +27,12 @@ ActionParams CLILoader::parse(std::string someInput){
             actionParams.action = (*s)[0].str();
             firstElementFound = true;
         }else{
-            actionParams.params.push_back((*s)[0].str());
+            actionParams.params += ((*s)[0].str());
+            actionParams.params += " ";
         }
+    }
+    if(actionParams.params.length() != 0){
+        actionParams.params.pop_back();
     }
     return actionParams;
 }

@@ -3,5 +3,7 @@
 #include "ActionParams.hpp"
 
 class XMLLoader{
-    ActionParams ParseXML(std::filesystem::path file);
+public:
+    std::string getFileContent(std::filesystem::path);
+    ActionParams parseXMLString(std::string in_str);
 };

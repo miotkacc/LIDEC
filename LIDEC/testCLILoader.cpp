@@ -4,7 +4,11 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+<<<<<<< HEAD
 
+=======
+#include "ActionParams.hpp"
+>>>>>>> XMLLoader
 #include "CLILoader.hpp"
 
 using namespace std::string_literals;
@@ -41,7 +45,7 @@ TEST_F(CLILoaderTest, GivenTwoWordStringToParseWhenParseMethodIsCalledExpectCLIL
 
     auto results = cLILoader.parse(twoWordString);
 
-    auto expectedOutput = ActionParams{"MakeDinner", {"2"}};
+    auto expectedOutput = ActionParams{"MakeDinner", "2"};
     EXPECT_EQ(results, expectedOutput);
 }
 
@@ -51,6 +55,6 @@ TEST_F(CLILoaderTest, GivenSixWordStringToParseWhenParseMethodIsCalledExpectCLIL
     
     auto results = cLILoader.parse(sixWordString);
     
-    auto expectedOutput = ActionParams{"MakeDinner", {"2", "cola", "pancake", "table", "spoil"}};
+    auto expectedOutput = ActionParams{"MakeDinner", "2 cola pancake table spoil"};
     EXPECT_EQ(results, expectedOutput);
 }
