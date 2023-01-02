@@ -23,3 +23,10 @@ TEST(XMLLoader, GivenXMLLoaderWhenparseXMLStringIsCalledThenExpectParsedOutput)
 
     EXPECT_EQ(actionParams, expectedOutput);
 }
+
+TEST(XMLLoader, GivenStringWhenstringToVectorMethodIsCalledWithStringSeparatedWithSpacesExpectVectorOfString)
+{
+    std::vector<std::string> expectedVectorOfStrings{"1", "2", "potatoes"};
+    auto returnedVectorOfStrings = XMLLoader::stringToVector("1 2 potatoes");
+    EXPECT_EQ(expectedVectorOfStrings, returnedVectorOfStrings);
+}

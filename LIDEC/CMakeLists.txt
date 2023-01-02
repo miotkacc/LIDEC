@@ -3,9 +3,10 @@ project(LIDEC)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_subdirectory(CLILoader)
 add_subdirectory(XMLLoader)
+add_subdirectory(CLILoader)
 add_subdirectory(Interpreter)
+add_subdirectory(Dispatcher)
 
 add_executable(main main.cpp)
 
@@ -29,3 +30,6 @@ target_link_libraries(testXMLLoader XMLLoader CLILoader ActionParams GTest::gtes
 
 add_executable(testInterpreter testInterpreter.cpp)
 target_link_libraries(testInterpreter Interpreter GTest::gtest_main GTest::gmock_main)
+
+add_executable(testDispatcher testDispatcher.cpp)
+target_link_libraries(testDispatcher GTest::gtest_main GTest::gmock_main Dispatcher)

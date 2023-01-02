@@ -5,40 +5,7 @@
 #include <typeinfo>
 #include <ranges>
 #include <filesystem>
-
-std::optional<std::string> Interpreter::getProp(const xmlNode *node, std::string wantedPropName)
-{
-    auto propPtr = xmlGetProp(node, (const xmlChar *)wantedPropName.c_str());
-    if (propPtr != nullptr)
-    {
-        return std::string((const char *)propPtr);
-    }
-    else
-    {
-        return std::nullopt;
-    }
-}
-
-xmlNode* Interpreter::getFirstChild(xmlDocPtr docPtr){
-    auto childrenNode = docPtr->xmlChildrenNode;
-    if (childrenNode == nullptr)
-    {
-        return nullptr;
-    }
-    return childrenNode->xmlChildrenNode;
-}
-
-std::vector<std::string> Interpreter::stringToVector(std::string inArgs)
-{
-    auto regExp = std::regex("([a-zA-Z0-9]+)");
-    const std::sregex_iterator end{};
-    std::vector<std::string> vectorOfStrings;
-    for (std::sregex_iterator s{inArgs.cbegin(), inArgs.cend(), regExp}; s != end; s++)
-    {
-        vectorOfStrings.push_back((*s)[0].str());
-    }
-    return vectorOfStrings;
-}
+#include "XMLLoader.hpp"
 
 bool Interpreter::validateParamsAgainstParams(std::vector<std::string> argsVals, std::vector<std::string> argTypesVector){
     if (argsVals.size() != argTypesVector.size())
@@ -91,7 +58,7 @@ bool Interpreter::validateActionParamsAgainstConfigXML(ActionParams actionParams
     xmlDocPtr doc; /* the resulting document tree */
     doc = xmlParseDoc(pointer_uchar);
 
-    auto childrenNode = getFirstChild(doc);
+    auto childrenNode = XMLLoader::getFirstChild(doc);
     if (childrenNode == nullptr)
     {
         return false;
@@ -101,14 +68,14 @@ bool Interpreter::validateActionParamsAgainstConfigXML(ActionParams actionParams
         if (std::basic_string<unsigned char>(actualNode->name) ==
             std::basic_string<unsigned char>((unsigned char *)"function"))
         {
-            auto name = getProp(actualNode, "name");
+            auto name = XMLLoader::getProp(actualNode, "name");
             if (name and name == actionParams.action)
             {
-                auto argTypes = getProp(actualNode, "paramsTypes");
+                auto argTypes = XMLLoader::getProp(actualNode, "paramsTypes");
                 if (argTypes)
                 {
-                    auto args = stringToVector(actionParams.params);
-                    auto argTypesVector = stringToVector(*argTypes);
+                    auto args = XMLLoader::stringToVector(actionParams.params);
+                    auto argTypesVector = XMLLoader::stringToVector(*argTypes);
                     auto recognizedParam = validateParamsAgainstParams(args, argTypesVector);
                     if(recognizedParam)
                         return true;

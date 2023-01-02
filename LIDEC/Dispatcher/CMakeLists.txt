@@ -1,0 +1,3 @@
+add_library(Dispatcher src/Dispatcher.cpp)
+target_link_libraries(Dispatcher ActionParams XMLLoader)
+target_include_directories(Dispatcher PUBLIC include)

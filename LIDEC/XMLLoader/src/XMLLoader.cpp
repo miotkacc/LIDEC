@@ -1,6 +1,42 @@
 #include "XMLLoader.hpp"
 #include <libxml/parser.h>
 #include <libxml/tree.h>
+#include <regex>
+
+
+std::optional<std::string> XMLLoader::getProp(const xmlNode *node, std::string wantedPropName)
+{
+    auto propPtr = xmlGetProp(node, (const xmlChar *)wantedPropName.c_str());
+    if (propPtr != nullptr)
+    {
+        return std::string((const char *)propPtr);
+    }
+    else
+    {
+        return std::nullopt;
+    }
+}
+
+xmlNode* XMLLoader::getFirstChild(xmlDocPtr docPtr){
+    auto childrenNode = docPtr->xmlChildrenNode;
+    if (childrenNode == nullptr)
+    {
+        return nullptr;
+    }
+    return childrenNode->xmlChildrenNode;
+}
+
+std::vector<std::string> XMLLoader::stringToVector(std::string inArgs)
+{
+    auto regExp = std::regex("([a-zA-Z0-9]+)");
+    const std::sregex_iterator end{};
+    std::vector<std::string> vectorOfStrings;
+    for (std::sregex_iterator s{inArgs.cbegin(), inArgs.cend(), regExp}; s != end; s++)
+    {
+        vectorOfStrings.push_back((*s)[0].str());
+    }
+    return vectorOfStrings;
+}
 
 std::string XMLLoader::getFileContent(std::filesystem::path)
 {
