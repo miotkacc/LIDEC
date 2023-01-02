@@ -11,6 +11,7 @@ int main(){
     auto c = cLILoader.parse("siema tu ff "s);
     auto r = XMLLoader();
     auto ap = r.parseXMLString(R"(<LIDEC><Action>Make Pizza</Action><Param>1</Param><Param>withOnion</Param></LIDEC>)");
-    std::cout<<ap;
+    std::cout<<ap<<std::endl;
+    std::cout<<__cplusplus<<std::endl;
     return 0;
 }

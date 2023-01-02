@@ -5,14 +5,11 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(CLILoader)
 add_subdirectory(XMLLoader)
+add_subdirectory(Interpreter)
 
 add_executable(main main.cpp)
 
-<<<<<<< HEAD
-target_link_libraries(main CLILoader)
-=======
 target_link_libraries(main CLILoader XMLLoader ActionParams)
->>>>>>> XMLLoader
 
 include(FetchContent)
 FetchContent_Declare(
@@ -29,3 +26,6 @@ target_link_libraries(testCLILoader CLILoader GTest::gtest_main GTest::gmock_mai
 
 add_executable(testXMLLoader testXMLLoader.cpp)
 target_link_libraries(testXMLLoader XMLLoader CLILoader ActionParams GTest::gtest_main GTest::gmock_main)
+
+add_executable(testInterpreter testInterpreter.cpp)
+target_link_libraries(testInterpreter Interpreter GTest::gtest_main GTest::gmock_main)
