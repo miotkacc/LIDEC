@@ -7,6 +7,7 @@ add_subdirectory(XMLLoader)
 add_subdirectory(CLILoader)
 add_subdirectory(Interpreter)
 add_subdirectory(Dispatcher)
+add_subdirectory(Executors)
 
 add_executable(main main.cpp)
 
@@ -33,3 +34,6 @@ target_link_libraries(testInterpreter Interpreter GTest::gtest_main GTest::gmock
 
 add_executable(testDispatcher testDispatcher.cpp)
 target_link_libraries(testDispatcher GTest::gtest_main GTest::gmock_main Dispatcher)
+
+add_executable(testExecutors testExecutors.cpp)
+target_link_libraries(testExecutors GTest::gtest_main GTest::gmock_main Executors)
