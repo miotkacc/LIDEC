@@ -29,7 +29,7 @@ xmlNode *XMLLoader::getFirstChild(xmlDocPtr docPtr)
 
 std::vector<std::string> XMLLoader::stringToVector(std::string inArgs)
 {
-    auto regExp = std::regex("([a-zA-Z0-9]+)");
+    auto regExp = std::regex("([^ ]+)");
     const std::sregex_iterator end{};
     std::vector<std::string> vectorOfStrings;
     for (std::sregex_iterator s{inArgs.cbegin(), inArgs.cend(), regExp}; s != end; s++)

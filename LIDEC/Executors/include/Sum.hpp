@@ -1,9 +1,11 @@
 #pragma once
 #include <initializer_list>
 #include <numeric>
+#include <vector>
+
 
 namespace Executors{
     struct Sum{
-        void operator()(std::initializer_list<int>);
+        void operator()(std::vector<int>);
     };
 }

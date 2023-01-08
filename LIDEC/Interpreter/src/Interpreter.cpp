@@ -8,8 +8,29 @@
 #include "XMLLoader.hpp"
 
 bool Interpreter::validateParamsAgainstParams(std::vector<std::string> argsVals, std::vector<std::string> argTypesVector){
+    if(argTypesVector.size() == 1 and argTypesVector[0] == "ints"){
+        for (auto arg: argsVals)
+        {
+            std::vector<std::string> ints = XMLLoader::stringToVector(arg);
+            for(auto stringInt: ints)
+            {
+                try
+                {
+                    auto val = std::stoi(stringInt);
+                }
+                catch (const std::exception &e)
+                {
+                    std::cerr<<__FILE__<<":"<<__LINE__<< e.what()<<" in Interpreter during converting string to integer" << std::endl;
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     if (argsVals.size() != argTypesVector.size())
     {
+         std::cerr <<__FILE__<<":"<<__LINE__<<"incosistent size of two vectors"<<std::endl;
         return false;
     }
     auto numberOfElements = argsVals.size();
@@ -21,19 +42,6 @@ bool Interpreter::validateParamsAgainstParams(std::vector<std::string> argsVals,
         {
             continue;
         }
-        if (argType == "int")
-        {
-            try
-            {
-                auto val = std::stoi(arg);
-                continue;
-            }
-            catch (const std::exception &e)
-            {
-                std::cout << e.what() << std::endl;
-                return false;
-            }
-        }
         if (argType == "filename")
         {
             try
@@ -43,7 +51,7 @@ bool Interpreter::validateParamsAgainstParams(std::vector<std::string> argsVals,
             }
             catch (const std::exception &e)
             {
-                std::cout << e.what() << std::endl;
+                std::cerr<<__FILE__<<":"<<__LINE__ << e.what() << std::endl;
                 return false;
             }
         }
@@ -61,6 +69,7 @@ bool Interpreter::validateActionParamsAgainstConfigXML(ActionParams actionParams
     auto childrenNode = XMLLoader::getFirstChild(doc);
     if (childrenNode == nullptr)
     {
+        std::cerr<<__FILE__<<":"<<__LINE__<<" problem with xml"<<std::endl;
         return false;
     }
     for (auto actualNode = childrenNode; actualNode != nullptr; actualNode = actualNode->next)
@@ -84,5 +93,6 @@ bool Interpreter::validateActionParamsAgainstConfigXML(ActionParams actionParams
         }
     }
     xmlFreeDoc(doc);
+    std::cerr<<__FILE__<<":"<<__LINE__<<" not valid actionParams against config xml"<<std::endl;
     return false;
 }

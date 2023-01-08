@@ -3,7 +3,7 @@
 
 
 namespace Executors{
-    void Sum::operator()(std::initializer_list<int> args){
+    void Sum::operator()(std::vector<int> args){
         auto val = std::accumulate(args.begin(), args.end(), int(0));
         std::cout<<"Sum result "<<val<<std::endl;
     }

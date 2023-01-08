@@ -11,7 +11,7 @@ add_subdirectory(Executors)
 
 add_executable(main main.cpp)
 
-target_link_libraries(main CLILoader XMLLoader ActionParams)
+target_link_libraries(main CLILoader XMLLoader Interpreter Dispatcher Executors ActionParams)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -37,3 +37,6 @@ target_link_libraries(testDispatcher GTest::gtest_main GTest::gmock_main Dispatc
 
 add_executable(testExecutors testExecutors.cpp)
 target_link_libraries(testExecutors GTest::gtest_main GTest::gmock_main Executors)
+
+add_executable(test testCLILoader.cpp testXMLLoader.cpp testInterpreter.cpp testDispatcher.cpp testExecutors.cpp)
+target_link_libraries(test GTest::gtest_main GTest::gmock_main CLILoader ActionParams XMLLoader Interpreter Dispatcher Executors)

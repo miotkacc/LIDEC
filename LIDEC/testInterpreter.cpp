@@ -7,7 +7,7 @@
 
 TEST(Interpreter, GivenActionParamsAndFileContentWhenvalidateActionParamsAgainstConfigXMLMethodIsCalledThenExpectTrue){
     Interpreter interpreter;
-    std::string fileContent = R"(<LIDEC><function name="MakePizza" paramsTypes="int"></function></LIDEC>)";
+    std::string fileContent = R"(<LIDEC><function name="MakePizza" paramsTypes="ints"></function></LIDEC>)";
     auto returnedValue = interpreter.validateActionParamsAgainstConfigXML({"MakePizza", "1"}, fileContent);
     bool expectedValue{true};
     EXPECT_EQ(returnedValue, expectedValue);
@@ -23,7 +23,7 @@ TEST(Interpreter, GivenActionParamsAndFileContentWhenvalidateActionParamsAgainst
 
 TEST(Interpreter, GivenActionParamsAndFileContentWith3IntsWhenvalidateActionParamsAgainstConfigXMLMethodIsCalledThenExpectTrue){
     Interpreter interpreter;
-    std::string fileContent = R"(<LIDEC><function name="MakePizza" paramsTypes="int int int"></function></LIDEC>)";
+    std::string fileContent = R"(<LIDEC><function name="MakePizza" paramsTypes="ints"></function></LIDEC>)";
     auto returnedValue = interpreter.validateActionParamsAgainstConfigXML({"MakePizza", "1 1 1"}, fileContent);
     auto expectedValue = true;
     EXPECT_EQ(returnedValue, expectedValue);

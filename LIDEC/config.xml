@@ -1,0 +1,5 @@
+<LIDEC>
+    <function name="echoUp" paramsTypes="string"></function>
+    <function name="cat" paramsTypes="filename"></function>
+    <function name="sum" paramsTypes="ints"></function>
+</LIDEC>

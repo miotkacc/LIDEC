@@ -17,7 +17,7 @@ std::string CLILoader::capture(){
 }
 
 ActionParams CLILoader::parse(std::string someInput){
-    auto regExp = std::regex("([a-zA-Z0-9]+)");
+    auto regExp = std::regex("([^ ]+)");
     const std::sregex_iterator end{};
     ActionParams actionParams{};
     bool firstElementFound{};
