@@ -8,7 +8,14 @@ namespace Executors{
         std::string fileContent;
         std::fstream f;
         f.open(path, std::ios::in);
-        f>>fileContent;
+        if (f.is_open())
+        {
+            std::getline(f, fileContent, '\0');
+        }
+        else
+        {
+            std::cout << "File not opened" << std::endl;
+        }
         f.close();
         std::cout<<fileContent;
     }   

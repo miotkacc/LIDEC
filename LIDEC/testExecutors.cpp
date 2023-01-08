@@ -4,15 +4,20 @@
 #include "EchoUp.hpp"
 #include "Cat.hpp"
 
-
 TEST(ExecutorSum, GivenTwoNumbersWhenOperatorFunctionIsCalledExpectNoCrash)
 {
     Executors::Sum sum;
-    sum({1,2});
+    sum({1, 2});
 }
 
-TEST(ExecutorSum, GivenFilePathWhenOperatorFunctionIsCalledExpectNoCrash)
+TEST(ExecutorCat, GivenFilePathWhenOperatorFunctionIsCalledExpectNoCrash)
 {
     Executors::Cat cat;
-    cat("test.txt");
+    cat("../test.txt");
+}
+
+TEST(ExecutorEchoUp, GivenStringWhenOperatorFunctionIsCalledExpectNoCrash)
+{
+    Executors::EchoUp echoUp;
+    echoUp("hello");
 }

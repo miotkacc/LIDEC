@@ -2,7 +2,7 @@
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <regex>
-
+#include <fstream>
 
 std::optional<std::string> XMLLoader::getProp(const xmlNode *node, std::string wantedPropName)
 {
@@ -17,7 +17,8 @@ std::optional<std::string> XMLLoader::getProp(const xmlNode *node, std::string w
     }
 }
 
-xmlNode* XMLLoader::getFirstChild(xmlDocPtr docPtr){
+xmlNode *XMLLoader::getFirstChild(xmlDocPtr docPtr)
+{
     auto childrenNode = docPtr->xmlChildrenNode;
     if (childrenNode == nullptr)
     {
@@ -38,43 +39,61 @@ std::vector<std::string> XMLLoader::stringToVector(std::string inArgs)
     return vectorOfStrings;
 }
 
-std::string XMLLoader::getFileContent(std::filesystem::path)
+std::string XMLLoader::getFileContent(std::filesystem::path path)
 {
-    return "<action>MakeSoup</action>";
+    std::string fileContent;
+    std::fstream f;
+    f.open(path, std::ios::in);
+    if (f.is_open())
+    {
+        std::getline(f, fileContent, '\0');
+    }
+    else
+    {
+        std::cout << "File not opened" << std::endl;
+    }
+    f.close();
+    return fileContent;
 }
 
 ActionParams XMLLoader::parseXMLString(std::string in_str)
 {
-    
-    auto pointer_uchar = (unsigned char*)in_str.c_str(); 
+
+    auto pointer_uchar = (unsigned char *)in_str.c_str();
     xmlDocPtr doc; /* the resulting document tree */
     doc = xmlParseDoc(pointer_uchar);
-    
+
     auto childrenNode = doc->xmlChildrenNode;
-    if(childrenNode == nullptr){
+    if (childrenNode == nullptr)
+    {
         return {};
     }
     childrenNode = childrenNode->xmlChildrenNode;
-    if(childrenNode == nullptr){
+    if (childrenNode == nullptr)
+    {
         return {};
     }
     ActionParams actionParams{};
-    if(!xmlStrcmp(childrenNode->name, (const xmlChar*)"exec")){
-        auto actionPtr = xmlGetProp(childrenNode, (const xmlChar*)"action");
-        if(actionPtr != nullptr){
-            std::string action((const char*)actionPtr);
+    if (!xmlStrcmp(childrenNode->name, (const xmlChar *)"exec"))
+    {
+        auto actionPtr = xmlGetProp(childrenNode, (const xmlChar *)"action");
+        if (actionPtr != nullptr)
+        {
+            std::string action((const char *)actionPtr);
             actionParams.action = action;
         }
-        auto paramsPtr = xmlGetProp(childrenNode, (const xmlChar*)"params");
-        if(paramsPtr != nullptr){
-            std::string params((const char*)paramsPtr);
+        auto paramsPtr = xmlGetProp(childrenNode, (const xmlChar *)"params");
+        if (paramsPtr != nullptr)
+        {
+            std::string params((const char *)paramsPtr);
             actionParams.params = params;
         }
     }
-    else{
-        std::cout<<"instead  action and params in exec node I have node: "<<(unsigned char*)childrenNode->name<<"\n";
+    else
+    {
+        std::cout << "instead  action and params in exec node I have node: " << (unsigned char *)childrenNode->name << "\n";
     }
-    
+
     xmlFreeDoc(doc);
     return actionParams;
 }

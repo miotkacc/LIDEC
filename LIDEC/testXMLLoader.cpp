@@ -6,11 +6,17 @@ TEST(XMLLoader, GivenXMLLoaderWhengetFileContentIsCalledThenExpectFileContentOut
 {
     XMLLoader xMLLoader;
 
-    auto output = xMLLoader.getFileContent("dd.txt");
+    auto output = xMLLoader.getFileContent("../test.xml");
 
     auto expectedOutput = "<action>MakeSoup</action>";
 
     EXPECT_EQ(output, expectedOutput);
+}
+
+TEST(XMLLoader, GivenFilepathAndExistingFileWhengetFileContentMethodIsCalledExpectFilecontent){
+    auto result = XMLLoader::getFileContent("../test.txt");
+    std::string expectedResult = "a\nb\nc\n1\n2\n3";
+    EXPECT_EQ(result, expectedResult);
 }
 
 TEST(XMLLoader, GivenXMLLoaderWhenparseXMLStringIsCalledThenExpectParsedOutput)
