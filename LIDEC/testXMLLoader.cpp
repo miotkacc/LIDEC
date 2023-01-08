@@ -4,9 +4,7 @@
 
 TEST(XMLLoader, GivenXMLLoaderWhengetFileContentIsCalledThenExpectFileContentOutput)
 {
-    XMLLoader xMLLoader;
-
-    auto output = xMLLoader.getFileContent("../test.xml");
+    auto output = XMLLoader::getFileContent("../test.xml");
 
     auto expectedOutput = "<action>MakeSoup</action>";
 
@@ -21,11 +19,9 @@ TEST(XMLLoader, GivenFilepathAndExistingFileWhengetFileContentMethodIsCalledExpe
 
 TEST(XMLLoader, GivenXMLLoaderWhenparseXMLStringIsCalledThenExpectParsedOutput)
 {
-    auto xMLLoader = XMLLoader{};
-    
-    auto actionParams = xMLLoader.parseXMLString(R"(<LIDEC><exec action="Make Pizza" params="1 Onion"></exec></LIDEC>)");
+    auto actionParams = XMLLoader::parseXMLString(R"(<LIDEC><exec action="Make Pizza" params="1 Onion"></exec></LIDEC>)");
 
-    auto expectedOutput = ActionParams{"Make Pizza", "1 Onion"};
+    std::vector<ActionParams> expectedOutput{ActionParams{"Make Pizza", "1 Onion"}};
 
     EXPECT_EQ(actionParams, expectedOutput);
 }

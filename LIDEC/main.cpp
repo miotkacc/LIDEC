@@ -1,12 +1,14 @@
+#include <iostream>
+
 #include "CLILoader.hpp"
 #include "XMLLoader.hpp"
 #include "ActionParams.hpp"
 #include "Interpreter.hpp"
-#include <iostream>
 #include "Dispatcher.hpp"
 #include "Cat.hpp"
 #include "EchoUp.hpp"
 #include "Sum.hpp"
+
 
 using namespace std::literals::string_literals;
 

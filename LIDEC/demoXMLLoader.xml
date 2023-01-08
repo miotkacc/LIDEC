@@ -1,0 +1,1 @@
+<LIDEC><exec action="echoUp" params="Onion"></exec><exec action="cat" params="../test.txt"></exec><exec action="sum" params="1 2 3"></exec></LIDEC>

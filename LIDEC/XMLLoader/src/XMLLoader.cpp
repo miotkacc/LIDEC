@@ -56,44 +56,54 @@ std::string XMLLoader::getFileContent(std::filesystem::path path)
     return fileContent;
 }
 
-ActionParams XMLLoader::parseXMLString(std::string in_str)
+std::vector<ActionParams> XMLLoader::parseXMLString(std::string in_str)
 {
-
     auto pointer_uchar = (unsigned char *)in_str.c_str();
-    xmlDocPtr doc; /* the resulting document tree */
-    doc = xmlParseDoc(pointer_uchar);
+    xmlDocPtr doc = xmlParseDoc(pointer_uchar);
 
-    auto childrenNode = doc->xmlChildrenNode;
-    if (childrenNode == nullptr)
+    auto parentNode = doc->xmlChildrenNode;
+    if(parentNode == nullptr)
     {
+        std::cerr<<__FILE__<<__LINE__<<"parentNode == nullptr"<<std::endl;
         return {};
     }
-    childrenNode = childrenNode->xmlChildrenNode;
-    if (childrenNode == nullptr)
+
+    auto childrenNode = parentNode->xmlChildrenNode;
+    if(childrenNode == nullptr)
     {
+        std::cerr<<__FILE__<<__LINE__<<"childrenNode == nullptr"<<std::endl;
         return {};
     }
-    ActionParams actionParams{};
-    if (!xmlStrcmp(childrenNode->name, (const xmlChar *)"exec"))
+
+    std::vector<ActionParams> actionParamsVector;
+
+    while (!xmlStrcmp(childrenNode->name, (const xmlChar *)"exec"))
     {
+        ActionParams actionParams{};
         auto actionPtr = xmlGetProp(childrenNode, (const xmlChar *)"action");
         if (actionPtr != nullptr)
         {
             std::string action((const char *)actionPtr);
             actionParams.action = action;
+        }else{
+            std::cerr<<__FILE__<<__LINE__<<"no action"<<std::endl;
+            continue;
         }
         auto paramsPtr = xmlGetProp(childrenNode, (const xmlChar *)"params");
         if (paramsPtr != nullptr)
         {
             std::string params((const char *)paramsPtr);
             actionParams.params = params;
+        }else{
+            std::cerr<<__FILE__<<__LINE__<<"no params"<<std::endl;
+            continue;
         }
-    }
-    else
-    {
-        std::cout << "instead  action and params in exec node I have node: " << (unsigned char *)childrenNode->name << "\n";
+        actionParamsVector.push_back(actionParams);
+        childrenNode = childrenNode->next;
+        if(childrenNode == nullptr)
+            break;
     }
 
     xmlFreeDoc(doc);
-    return actionParams;
+    return actionParamsVector;
 }

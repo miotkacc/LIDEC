@@ -40,3 +40,6 @@ target_link_libraries(testExecutors GTest::gtest_main GTest::gmock_main Executor
 
 add_executable(test testCLILoader.cpp testXMLLoader.cpp testInterpreter.cpp testDispatcher.cpp testExecutors.cpp)
 target_link_libraries(test GTest::gtest_main GTest::gmock_main CLILoader ActionParams XMLLoader Interpreter Dispatcher Executors)
+
+add_executable(demoXMLLoader demoXMLLoader.cpp)
+target_link_libraries(demoXMLLoader CLILoader ActionParams XMLLoader Interpreter Dispatcher Executors)
