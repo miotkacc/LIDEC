@@ -96,3 +96,9 @@ bool Interpreter::validateActionParamsAgainstConfigXML(ActionParams actionParams
     std::cerr<<__FILE__<<":"<<__LINE__<<" not valid actionParams against config xml"<<std::endl;
     return false;
 }
+
+void Interpreter::addActionParams(ActionParams actionParams, std::queue<ActionParams>& que, std::mutex& m, std::condition_variable& cv){
+    std::lock_guard lk(m);
+    que.push(actionParams);
+    cv.notify_one();
+}

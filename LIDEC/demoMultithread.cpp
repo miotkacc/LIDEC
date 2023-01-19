@@ -21,9 +21,7 @@ int main()
     dispatcher.startThread(que, cv, m);
     while(true){
         std::this_thread::sleep_for(std::chrono::seconds{1});
-        std::lock_guard<std::mutex> lg(m);
-        que.push(ActionParams{"sum", "1 2 3"});
-        cv.notify_one();
+        interpreter.addActionParams(ActionParams{"sum", "1 2 3"}, que, m, cv);
     }
     return 0;
 }
